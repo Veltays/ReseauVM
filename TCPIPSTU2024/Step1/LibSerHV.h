@@ -2,7 +2,16 @@
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
+
 #include "data.h"
 
-void AProposServeurHV(char *Version,char *Nom1,char* Nom2) ;
+#include <fcntl.h>
+#include <unistd.h>
 
+void AProposServeurHV(char *Version,char *Nom1,char* Nom2) ;
+int RechercheHV(char* NomFichier,int Reference ,struct VehiculeHV *UnRecord);
+
+extern void AfficheEnteteVehiculeHV();
+extern void AfficheVehiculeHV();
+
+void viderBuffer();

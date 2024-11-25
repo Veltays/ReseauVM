@@ -21,6 +21,7 @@
 
 static struct termios old, new;
 
+
 //clrscr() function definition
 // #include <stdlib.h>
 void ClrScr(void)
@@ -110,8 +111,8 @@ void AfficheEnteteVehiculeHV()
    MonPrintf(Tampon, 30, strlen(Tampon));
    sprintf(Tampon, "%s", "Quantite");
    MonPrintf(Tampon, 10, strlen(Tampon));
-   sprintf(Tampon, "%s", "Champ Personelle");
-   MonPrintf(Tampon, 20, strlen(Tampon));
+   sprintf(Tampon, "%s", "Boite");
+   MonPrintf(Tampon, 6, strlen(Tampon));
    printf("\n");
 }
 
@@ -126,8 +127,8 @@ void AfficheVehiculeHV(struct VehiculeHV *UnRecord)
    MonPrintf(Tampon, 30, strlen(Tampon));
    sprintf(Tampon, "%d", UnRecord->Quantite);
    MonPrintf(Tampon, 10, strlen(Tampon));
-   sprintf(Tampon, "%d", UnRecord->ChampPersonel);
-   MonPrintf(Tampon, 20 ,strlen(Tampon));
+   sprintf(Tampon, "%s", UnRecord->Boite);
+   MonPrintf(Tampon, 6, strlen(Tampon));
    printf("\n");
 }
 
@@ -144,7 +145,7 @@ void SaiSieVehiculeHV(int Reference, struct VehiculeHV *UnRecord)
    printf("Saisie Quantite :");
    fgets(Tampon, sizeof Tampon, stdin);
    UnRecord->Quantite = atoi(Tampon);
-   UnRecord->ChampPersonel = 8;
+   strcpy(UnRecord->Boite,"Manuelle,automatique");
 
    DelNewLine(UnRecord->Constructeur);
    DelNewLine(UnRecord->Modele);
@@ -279,6 +280,7 @@ int main()
    int Numero;
    while (1)
    {
+      int SRef;
       printf("-------2022-----------\n");
       printf("1) Ajout              \n");
       printf("2) Vehicule           \n");
@@ -308,7 +310,6 @@ int main()
             CreationAjoutVehiculeHV("VehiculesHV", &UnRecord);
             printf("Encoder un autre (Y/N) ?)");
             printf(">>");
-            UnRecord.ChampPersonel = 8;
             Redo = GetchE();
             printf("\n");
          }
@@ -319,7 +320,9 @@ int main()
          ListingVehiculesHV("VehiculesHV");
          break;
       case '4':
-
+         printf("\t\t RECHERCHE ---- \n Entrez le reference de votre recherche \n ---->");
+         scanf("%d", &SRef);
+         RechercheHV("./VehiculesHV", SRef, &UnRecord);
          break;
       case '6':
          ListingFacturesHV("FactureHV");

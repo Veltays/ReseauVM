@@ -13,7 +13,7 @@ struct VehiculeHV
 	char Constructeur[30];
 	char Modele[30];
 	int Quantite;
-	int ChampPersonel;
+	char Boite[30];
 
 };
 
