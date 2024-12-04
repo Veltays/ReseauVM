@@ -13,7 +13,7 @@ struct Requete
   time_t Date;
   int Reference; // la référence du film
   int Quantite;
-  char Boite[30];
+  char motorisation[30];
   int Prix;
   char Constructeur[30];
   char Modele[30];
@@ -37,17 +37,6 @@ void AfficheRequete(FILE *fp, struct Requete R)
   fprintf(fp, ">Modele %s \n", R.Modele);
   fprintf(fp, ">Client %s \n\n", R.NomClient);
 
-  printf("Constructeur , Modele:%s %s \n",R.Constructeur,R.Modele);
-  //Pour la console 
-  printf(">TypeRequete %d \n", R.Type);
-  //printf(">Numero %d \n", R.Numero);
-  printf(">NumeroFacture %d \n", R.NumeroFacture);
-  //printf(">Date %ld \n", R.Date);
-  printf(">Reference %d \n", R.Reference);
-  printf(">Quantite %d \n", R.Quantite);
-  printf(">Prix %d \n", R.Prix);
-  printf(">Constructeur %s \n", R.Constructeur);
-  printf(">Modele %s \n", R.Modele);
-  printf(">Client %s \n\n", R.NomClient);
+
   return;
 }

@@ -32,11 +32,9 @@ void HandleTCPClient(int clntSocket)
       strcpy(UneRequete.Modele, UnRecord.Modele);
       UneRequete.Prix = 1;
       UneRequete.Quantite = UnRecord.Quantite;
-      strcpy(UneRequete.Boite, UnRecord.Boite);
+      strcpy(UneRequete.motorisation,UnRecord.motorisation);
       FILE *log;
-      log = fopen("./log", "wt");
-      AfficheRequete(log, UneRequete);
-      fclose(log);
+      AfficheRequete(stderr, UneRequete);
     }
     else
       printf("La réference n'a pas été trouver");
