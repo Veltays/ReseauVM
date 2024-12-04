@@ -111,7 +111,7 @@ void AfficheEnteteVehiculeHV()
    MonPrintf(Tampon, 30, strlen(Tampon));
    sprintf(Tampon, "%s", "Quantite");
    MonPrintf(Tampon, 10, strlen(Tampon));
-   sprintf(Tampon, "%s", "Boite");
+   sprintf(Tampon, "%s", "motorisation");
    MonPrintf(Tampon, 6, strlen(Tampon));
    printf("\n");
 }
@@ -127,7 +127,7 @@ void AfficheVehiculeHV(struct VehiculeHV *UnRecord)
    MonPrintf(Tampon, 30, strlen(Tampon));
    sprintf(Tampon, "%d", UnRecord->Quantite);
    MonPrintf(Tampon, 10, strlen(Tampon));
-   sprintf(Tampon, "%s", UnRecord->Boite);
+   sprintf(Tampon, "%s", UnRecord->motorisation);
    MonPrintf(Tampon, 6, strlen(Tampon));
    printf("\n");
 }
@@ -145,7 +145,7 @@ void SaiSieVehiculeHV(int Reference, struct VehiculeHV *UnRecord)
    printf("Saisie Quantite :");
    fgets(Tampon, sizeof Tampon, stdin);
    UnRecord->Quantite = atoi(Tampon);
-   strcpy(UnRecord->Boite,"Manuelle,automatique");
+   strcpy(UnRecord->motorisation,"Essence, diesel, Electrique , Hybride");
 
    DelNewLine(UnRecord->Constructeur);
    DelNewLine(UnRecord->Modele);
