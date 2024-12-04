@@ -68,6 +68,10 @@ int main(int argc, char *argv[])
     {
         printf("Bytes received %ld \n", sizeof(UneRequete));
         AfficheRequete(stderr, UneRequete);
+        printf("\n\n>Résultat \n");
+        printf("Constructeur %-10s \n",UneRequete.Constructeur);
+        printf("Modele %-10s \n",UneRequete.Modele);
+
     }
 
     close(sock);
