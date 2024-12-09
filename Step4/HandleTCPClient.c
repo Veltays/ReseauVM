@@ -14,39 +14,60 @@ void HandleTCPClient(int clntSocket)
   int recvMsgSize; /* Size of received message */
   struct Requete UneRequete;
   struct VehiculeHV UnRecord;
+
+  int rc;
+  struct Requete UneRequeteE;
+  struct Requete UneRequeteR;
+
   /* Receive message from client */
+
   if ((recvMsgSize = recv(clntSocket, &UneRequete, sizeof(struct Requete), 0)) < 0)
     DieWithError("recv() failed");
-    
-  printf("Bytes received %ld \n",sizeof(UneRequete));
+
+  printf("Bytes received %ld \n", sizeof(UneRequete));
+
   while (recvMsgSize > 0)
   {
-    if ((RechercheHV("./VehiculesHV", UneRequete.Reference, &UnRecord)) > 0)
+    switch (UneRequete.Type)
     {
-      UneRequete.Reference = UnRecord.Reference;
-      UneRequete.Numero = 1;
-      UneRequete.NumeroFacture = 1;
-      UneRequete.Date = 1;
-      strcpy(UneRequete.NomClient, "Personne");
-      strcpy(UneRequete.Constructeur, UnRecord.Constructeur);
-      strcpy(UneRequete.Modele, UnRecord.Modele);
-      UneRequete.Prix = 1;
-      UneRequete.Quantite = UnRecord.Quantite;
-      strcpy(UneRequete.motorisation,UnRecord.motorisation);
-      FILE *log;
-      AfficheRequete(stderr, UneRequete);
+    case Question:
+      rc = RechercheHV("VehiculesHV", UneRequeteR.Reference, &UnRecord);
+      fprintf(stderr, "res :%d Reference:%s %s\n", rc, UnRecord.Constructeur, UnRecord.Modele);
+      /* reponse avec psor qui contient toujours l'adresse du dernier client */
+      memset(&UneRequeteE, 0, sizeof(struct Requete));
+      if (rc == 1)
+      {
+        UneRequeteE.Reference = UneRequeteR.Reference;
+        strncpy(UneRequeteE.Constructeur, UnRecord.Constructeur, sizeof(UneRequeteE.Constructeur));
+        strncpy(UneRequeteE.Modele, UnRecord.Modele, sizeof(UneRequeteE.Modele));
+        UneRequeteE.Type = OK;
+      }
+      else
+        UneRequeteE.Type = Fail;
+      rc = send(clntSocket, &UneRequeteE, sizeof(struct Requete), 0);
+      if (rc == -1)
+        perror("SendDatagram:");
+      else
+        printf("bytes ecrits %d\n", rc);
+      break;
+
+
+
+
+
+    default:
+
+      fprintf(stderr, "Code incorrect %d\n", UneRequeteR.Type);
+    }
+    if ((rc = recv(clntSocket, &UneRequeteR, sizeof(struct Requete), 0)) < 0)
+      DieWithError("recv() failed");
+    else if (rc != 0)
+    {
+      printf("Bytes received:%d\n", recvMsgSize);
+      AfficheRequete(stderr, UneRequeteR);
     }
     else
-      printf("La réference n'a pas été trouver");
-
-    /* Echo message back to client */
-    if (write(clntSocket, &UneRequete, recvMsgSize) != recvMsgSize)
-      DieWithError("send() failed");
-
-    /* See if there is more data to receive */
-    if ((recvMsgSize = read(clntSocket, &UneRequete, sizeof(struct Requete))) < 0)
-      DieWithError("recv() failed");
+      printf("Fermeture de connexion\n");
   }
-  printf("Connexion Closed\n");
-  close(clntSocket); /* Close client socket */
 }
+
