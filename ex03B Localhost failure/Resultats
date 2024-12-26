@@ -12,6 +12,7 @@ vanstapel@vanstap2:/mnt/hgfs/Windowstmp/TCPIP/ex03B$ ./TCPEchoServer localhost 1
 socket() Ok
 bind() Ok
 listen() Ok
+
 ### On constate le soucis avec l'adresse 255.255.255.255 ?????
 vanstapel@vanstap2:/mnt/hgfs/Windowstmp/TCPIP/ex03$ netstat -l4n
 Active Internet connections (only servers)

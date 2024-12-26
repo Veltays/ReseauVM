@@ -4,6 +4,8 @@ getaddrinfo: 127.0.0.1
 socket() Ok
 bind() Ok
 listen() Ok
+
+
 ### Le Client
 vanstapel@vanstap2:~/TCPIP/EX05B$ netstat -l4n
 Active Internet connections (only servers)
