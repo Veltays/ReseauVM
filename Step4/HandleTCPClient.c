@@ -31,7 +31,7 @@ void HandleTCPClient(int clntSocket)
     switch (UneRequete.Type)
     {
     case Question:
-      rc = RechercheHV("VehiculesHV", UneRequeteR.Reference, &UnRecord);
+      rc = RechercheHV("VehiculesHV", UneRequete.Reference, &UnRecord);
       fprintf(stderr, "res :%d Reference:%s %s\n", rc, UnRecord.Constructeur, UnRecord.Modele);
       /* reponse avec psor qui contient toujours l'adresse du dernier client */
       memset(&UneRequeteE, 0, sizeof(struct Requete));
